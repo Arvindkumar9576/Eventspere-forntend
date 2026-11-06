@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react'
-import { Button } from './ui/button'
+import { Button } from '../ui/button'
 import { Link } from 'react-router'
 import { Bookmark, Calendar, Compass, Menu, PlusCircle, Search, Sparkles, User, X } from 'lucide-react'
 

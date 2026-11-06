@@ -1,6 +1,6 @@
 import { Route, Routes, useLocation, useParams } from "react-router"
-import Footer from "./Components/Footer"
-import Navbar from "./Components/Navbar"
+import Footer from "./Components/common/Footer"
+import Navbar from "./Components/common/Navbar"
 import NotFound from "./pages/NotFound"
 import HomePage from "./pages/HomePage"
 import { useEffect } from "react"
