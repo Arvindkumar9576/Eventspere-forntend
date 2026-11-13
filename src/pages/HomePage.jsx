@@ -95,9 +95,9 @@ const HUB_CITIES = [
 function Home() {
 
   const [isLoading, setIsLoading] = useState(false);
-    const [categories, setCategories] = useState([]);
+  const [categories, setCategories] = useState([]);
   const [featuredEvents, setFeaturedEvents] = useState([]);
-    const [trendingEvents, setTrendingEvents] = useState([]);
+  const [trendingEvents, setTrendingEvents] = useState([]);
 
   useEffect(() => {
     async function loadHomePage() {
@@ -110,18 +110,18 @@ function Home() {
         );
         console.log(data);
         setFeaturedEvents(data);
-      } catch (error) { } 
+      } catch (error) { }
 
-            try {
+      try {
         let {
           data: { data },
         } = await axios.get(
           "https://eventsphere-server-mfdb.onrender.com/api/categories",
         );
         setCategories(data);
-      } catch (error) {}
+      } catch (error) { }
 
-       
+
       try {
         let {
           data: { data },
@@ -129,9 +129,9 @@ function Home() {
           "https://eventsphere-server-mfdb.onrender.com/api/events?limit=8&sort=startDate&order=asc",
         );
         setTrendingEvents(data);
-      } catch (error) {}
+      } catch (error) { }
 
-        setIsLoading(false)
+      setIsLoading(false)
     }
 
     loadHomePage()
@@ -202,7 +202,7 @@ function Home() {
         )}
       </section>
 
-       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-5">
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-5">
         <div>
           <h2 className="text-xl font-bold text-stone-900 tracking-tight">
             Browse by Discipline
@@ -245,7 +245,7 @@ function Home() {
                   <div
                     className={`w-10 h-10 rounded-xl border flex items-center justify-center mb-3 transition-all duration-200 ${color?.icon}`}
                   >
-                    <Icon/>
+                    <Icon />
                   </div>
                   <div>
                     <p
@@ -264,7 +264,7 @@ function Home() {
         )}
       </section>
 
-            <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-2 border-b border-[#EBE8DF]">
           <div>
             <h2 className="text-xl sm:text-2xl font-bold text-stone-900 tracking-tight">
@@ -298,7 +298,7 @@ function Home() {
         )}
       </section>
 
-       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-5">
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-5">
         <div>
           <h2 className="text-xl font-bold text-stone-900 tracking-tight">
             Explore by Community Hub
@@ -311,7 +311,7 @@ function Home() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           {HUB_CITIES.map((c, i) => (
             <Link
-            key={i}
+              key={i}
               to="/explore"
               className="group relative rounded-2xl overflow-hidden aspect-4/3 bg-stone-900 shadow-subtle border border-[#EBE8DF]"
             >
@@ -336,7 +336,7 @@ function Home() {
       </section>
 
 
-       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="bg-[#1C1B18] text-white rounded-3xl p-8 sm:p-12 border border-[#33312B] flex flex-col lg:flex-row items-center justify-between gap-8">
           <div className="max-w-xl space-y-3">
             <span className="text-xs font-bold uppercase tracking-wider text-[#FF8A65]">
