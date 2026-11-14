@@ -3,6 +3,7 @@ import FeaturedCarousel from '@/Components/common/FeaturedCarousel';
 import Skeleton from '@/Components/common/Skeletion';
 import EventCard from '@/Components/Events/EventCard';
 import { Button } from '@/Components/ui/button'
+import api from '@/lib/axios';
 import axios from 'axios';
 import { ArrowRight, Briefcase, ChevronRight, Compass, Cpu, Flame, GraduationCap, MapPin, Music, Palette, Sparkles, Tag, Trophy } from 'lucide-react'
 import React, { useEffect, useState } from 'react'
@@ -103,31 +104,20 @@ function Home() {
     async function loadHomePage() {
       setIsLoading(true)
       try {
-        let {
-          data: { data },
-        } = await axios.get(
-          "https://eventsphere-server-mfdb.onrender.com/api/events/featured",
-        );
-        console.log(data);
+        let 
+          data = await apiclear
+          .get("/api/events/featured",);
         setFeaturedEvents(data);
       } catch (error) { }
 
       try {
-        let {
-          data: { data },
-        } = await axios.get(
-          "https://eventsphere-server-mfdb.onrender.com/api/categories",
-        );
+        let 
+          data = await api.get("/api/categories",);
         setCategories(data);
       } catch (error) { }
 
-
       try {
-        let {
-          data: { data },
-        } = await axios.get(
-          "https://eventsphere-server-mfdb.onrender.com/api/events?limit=8&sort=startDate&order=asc",
-        );
+        let data = await api.get("/api/events?limit=8&sort=startDate&order=asc",);
         setTrendingEvents(data);
       } catch (error) { }
 
