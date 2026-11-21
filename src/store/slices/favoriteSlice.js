@@ -4,17 +4,29 @@ const favoriteSlice = createSlice({
     name: "favorites",
     initialState: {
 
-        name: "arvind",
+        items: []
     },
     reducers: {
         toggleFavorites(state, action) {
-            state.name = action.payload
+            const event = action.payload;
+            console.log(event);
+            const existingEvent = state.items.find(
+                (e) => (e.id || e._id) === (event.id || event._id),
+            );
+            if (existingEvent) {
+                // remove
+                state.items = state.items.filter(
+                    (e) => (e.id || e._id) !== (event.id || event._id),
+                );
+            } else {
+                state.items.push(event);
+            }
         },
-        removeFavorites(state) {},
-        clearFavorite(state) {},
+        removeFavorites(state) { },
+        clearFavorite(state) { },
     },
 });
 
-export const {toggleFavorites, removeFavorites, clearFavorite} = favoriteSlice.actions
+export const { toggleFavorites, removeFavorites, clearFavorite } = favoriteSlice.actions
 
 export default favoriteSlice.reducer; // connect with store
