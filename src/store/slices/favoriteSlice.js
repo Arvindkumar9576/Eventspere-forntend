@@ -9,7 +9,6 @@ const favoriteSlice = createSlice({
     reducers: {
         toggleFavorites(state, action) {
             const event = action.payload;
-            console.log(event);
             const existingEvent = state.items.find(
                 (e) => (e.id || e._id) === (event.id || event._id),
             );
@@ -23,10 +22,12 @@ const favoriteSlice = createSlice({
             }
         },
         removeFavorites(state) { },
-        clearFavorite(state) { },
+        clearFavorties(state) {
+            state.items = []
+        },
     },
 });
 
-export const { toggleFavorites, removeFavorites, clearFavorite } = favoriteSlice.actions
+export const { toggleFavorites, removeFavorites, clearFavorties } = favoriteSlice.actions
 
 export default favoriteSlice.reducer; // connect with store
