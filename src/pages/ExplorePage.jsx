@@ -3,9 +3,11 @@ import Skeleton from '@/Components/common/Skeletion';
 import EventCard from '@/Components/Events/EventCard';
 import EventFilterBar from '@/Components/Events/EventFilterBar';
 import api from '@/lib/axios';
-import { useEffect, useState } from 'react';
+import { setFormat } from '@/store/slices/filterSlice';
+import { useEffect, useRef, useState } from 'react';
 import { useInView } from 'react-intersection-observer';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { useSearchParams } from 'react-router';
 
 export default function ExplorePage() {
     const [events, setEvents] = useState([]);
@@ -18,19 +20,31 @@ export default function ExplorePage() {
     });
 
     const filters = useSelector((state) => state.filters);
-    console.log(filters);
-    
+    const [searchParams, setSearchParams] = useSearchParams();
+    const dispatch = useDispatch();
+    const activeRequestId = useRef(0);
+
 
     async function fetchEvents(page = 1, append = false) {
+        const thisRequestId = ++activeRequestId.current;
         if (page === 1) {
             setIsLoading(true);
         } else {
             setIsLoadingMore(true);
         }
+        const params = new URLSearchParams();
+        params.set("page", page);
+        if (filters.format) {
+            params.set("format", filters.format);
+        }
         try {
             const { data: events, pagination } = await api.get(
-                `/api/events?page=${page}&format=${filters.format}`,
+                `/api/events?${params.toString()}`,
             );
+
+            if (thisRequestId !== activeRequestId.current) {
+                return;
+            }
             if (append) {
                 setEvents((prev) => [...prev, ...events]);
             } else {
@@ -45,6 +59,17 @@ export default function ExplorePage() {
     }
 
     useEffect(() => {
+        const urlFormat = searchParams.get("format");
+
+        if (urlFormat) {
+            dispatch(setFormat(urlFormat));
+        } else {
+            dispatch(setFormat(""));
+        }
+    }, [searchParams, dispatch]);
+
+    useEffect(() => {
+        fetchEvents(1, false);
         fetchEvents(1, false);
     }, [filters.format]);
 
@@ -75,7 +100,7 @@ export default function ExplorePage() {
             </div>
 
             {/* Filter and Search Bar */}
-            <EventFilterBar/>
+            <EventFilterBar />
 
             {/* Results Header with Active Filter Tags */}
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs text-stone-500 pt-2 border-b border-[#EBE8DF] pb-3">
