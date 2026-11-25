@@ -36,10 +36,10 @@ export default function EventDetailsPage() {
             setIsLoading(true);
             try {
 
-                let data = await api.get(`/api/events/${slug}`);
+                let {data} = await api.get(`/api/events/${slug}`);
                 setEvent(data);
 
-                let reviews = await api.get(
+                    let {data: reviews} = await api.get(
                     `/api/events/${data.id || data._id}/reviews`,
                 );
             } catch (error) { }
