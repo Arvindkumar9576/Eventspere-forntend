@@ -3,7 +3,7 @@ import Skeleton from '@/Components/common/Skeletion';
 import EventCard from '@/Components/Events/EventCard';
 import EventFilterBar from '@/Components/Events/EventFilterBar';
 import api from '@/lib/axios';
-import { setFormat } from '@/store/slices/filterSlice';
+import { setFormat, setIsPaid } from '@/store/slices/filterSlice';
 import { useEffect, useRef, useState } from 'react';
 import { useInView } from 'react-intersection-observer';
 import { useDispatch, useSelector } from 'react-redux';
@@ -24,7 +24,6 @@ export default function ExplorePage() {
     const dispatch = useDispatch();
     const activeRequestId = useRef(0);
 
-
     async function fetchEvents(page = 1, append = false) {
         const thisRequestId = ++activeRequestId.current;
         if (page === 1) {
@@ -36,6 +35,9 @@ export default function ExplorePage() {
         params.set("page", page);
         if (filters.format) {
             params.set("format", filters.format);
+        }
+        if (filters.isPaid !== "") {
+            params.set("isPaid", String(filters.isPaid));
         }
         try {
             const { data: events, pagination } = await api.get(
@@ -60,18 +62,25 @@ export default function ExplorePage() {
 
     useEffect(() => {
         const urlFormat = searchParams.get("format");
+        const urlIsPaid = searchParams.get("isPaid");
 
         if (urlFormat) {
             dispatch(setFormat(urlFormat));
         } else {
             dispatch(setFormat(""));
         }
+        if (urlIsPaid !== "" && urlIsPaid !== null) {
+            console.log(urlIsPaid);
+            dispatch(setIsPaid(urlIsPaid === "true" ? true : false));
+        } else {
+            dispatch(setIsPaid(""));
+        }
     }, [searchParams, dispatch]);
 
     useEffect(() => {
         fetchEvents(1, false);
-        fetchEvents(1, false);
-    }, [filters.format]);
+       
+    }, [filters.format ,filters.isPaid]);
 
     const { ref: observerRef, inView } = useInView({
         threshold: 0.5,
