@@ -1,6 +1,6 @@
 
 import Skeleton from '@/Components/common/Skeletion';
-import EventCard from "@/components/events/EventCard";  
+import EventCard from "@/components/events/EventCard";
 import { EventFilterBar } from "@/components/events/EventFilterBar";
 import { useEventFilters } from '@/hooks/useEventFilters';
 import api from '@/lib/axios';
@@ -27,7 +27,9 @@ export default function ExplorePage() {
         } else {
             setIsLoadingMore(true);
         }
-        let str = `${apiQueryString()}&page=${page}`;
+        // let str = `${apiQueryString()}&page=${page}`;
+
+        let str = [`${apiQueryString()}`, `page=${page}`].filter(Boolean).join("&")
 
         try {
             const { data: events, pagination } = await api.get(`/api/events?${str}`);
