@@ -1,7 +1,7 @@
 
 import Skeleton from '@/Components/common/Skeletion';
-import EventCard from '@/Components/Events/EventCard';
-import EventFilterBar from '@/Components/Events/EventFilterBar';
+import EventCard from "@/components/events/EventCard";  
+import { EventFilterBar } from "@/components/events/EventFilterBar";
 import { useEventFilters } from '@/hooks/useEventFilters';
 import api from '@/lib/axios';
 import { useEffect, useRef, useState } from 'react';
